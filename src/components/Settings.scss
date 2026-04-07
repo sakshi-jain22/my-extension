@@ -1,0 +1,131 @@
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  height: 100%;
+  color: #e2e8f0;
+
+  .settings-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    .icon-glow {
+      color: #60a5fa;
+      filter: drop-shadow(0 0 10px rgba(96, 165, 250, 0.5));
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    p {
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+  }
+
+  .settings-form {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      label {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #cbd5e1;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        background: #1e293b;
+        border: 1px solid #334155;
+        color: #f8fafc;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+
+        &:focus {
+          outline: none;
+          border-color: #3b82f6;
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        &::placeholder {
+          color: #64748b;
+        }
+      }
+    }
+
+    .save-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      }
+
+      &:active {
+        transform: translateY(1px);
+      }
+    }
+  }
+
+  .help-box {
+    margin-top: 2rem;
+    text-align: center;
+    background: #1e293b;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    width: 100%;
+    max-width: 300px;
+    
+    p {
+      margin-bottom: 0.5rem;
+      color: #94a3b8;
+      font-size: 0.85rem;
+    }
+
+    .get-key-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: #60a5fa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #93c5fd;
+        text-decoration: underline;
+      }
+    }
+  }
+}

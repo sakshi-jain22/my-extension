@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Gemini Assistant",
+  "version": "1.0",
+  "description": "Ask Google Gemini directly from your browser.",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Gemini Assistant"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "scripting"
+  ],
+  "icons": {
+    "16": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png"
+  }
+}
