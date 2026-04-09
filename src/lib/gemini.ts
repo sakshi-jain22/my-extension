@@ -29,8 +29,11 @@ export async function askGemini(
   apiKey: string,
   tabContext?: TabContext | null,
 ): Promise<string> {
-  const activeKey = apiKey || 'AIzaSyBSOcYVJqVn1S76VoCoRTMLqQ4LQG0TGCA';
-  
+  const activeKey = apiKey?.trim();
+  if (!activeKey) {
+    throw new Error('No Gemini API key is configured.');
+  }
+
   const genAI = new GoogleGenerativeAI(activeKey);
   const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
   
