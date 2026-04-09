@@ -7,6 +7,8 @@ import { useStorage } from './hooks/useStorage';
 function App() {
   const { value: apiKey, saveValue, isLoaded } = useStorage('gemini_api_key');
   const [showSettings, setShowSettings] = useState(false);
+  const defaultApiKey = process.env.REACT_APP_GEMINI_API_KEY?.trim() ?? '';
+  const effectiveApiKey = apiKey.trim() || defaultApiKey;
 
   if (!isLoaded) {
     return (
@@ -32,7 +34,7 @@ function App() {
 
   return (
     <div className="app-container">
-      <Chat apiKey={apiKey} onOpenSettings={() => setShowSettings(true)} />
+      <Chat apiKey={effectiveApiKey} onOpenSettings={() => setShowSettings(true)} />
     </div>
   );
 }

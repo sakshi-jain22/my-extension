@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Loader2, Sparkles, Wand2, Settings as SettingsIcon } from 'lucide-react';
 import { askGemini } from '../lib/gemini';
+import { DEFAULT_GEMINI_MODEL, GEMINI_MODEL_OPTIONS } from '../lib/geminiModels';
 import { getActiveTabContext } from '../lib/tabContext';
+import { useStorage } from '../hooks/useStorage';
 import './Chat.scss';
 
 interface Message {
@@ -20,6 +22,13 @@ export const Chat: React.FC<ChatProps> = ({ apiKey, onOpenSettings }) => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const { value: selectedModel, saveValue: saveSelectedModel } = useStorage(
+    'gemini_selected_model',
+    DEFAULT_GEMINI_MODEL,
+  );
+  const activeModel = GEMINI_MODEL_OPTIONS.some((model) => model.id === selectedModel)
+    ? selectedModel
+    : DEFAULT_GEMINI_MODEL;
 
   // Auto-scroll to bottom of chat
   useEffect(() => {
@@ -44,12 +53,16 @@ export const Chat: React.FC<ChatProps> = ({ apiKey, onOpenSettings }) => {
 
     try {
       const tabContext = await getActiveTabContext();
-      const response = await askGemini(userMsg, apiKey, tabContext);
+      const response = await askGemini(userMsg, apiKey, activeModel, tabContext);
       setMessages(prev => [...prev, { role: 'model', content: response }]);
     } catch (error: any) {
       const message = String(error?.message || error);
       const friendlyMessage = /leaked|configured|api key/i.test(message)
         ? 'Gemini is blocked until you add a valid API key in Settings.'
+        : /quota|billing|rate limit/i.test(message)
+          ? 'Gemini quota is exhausted for the selected model. Try a different model or check your billing and usage limits.'
+        : /overloaded|high demand|temporarily unavailable|service unavailable/i.test(message)
+          ? 'Gemini is temporarily busy right now. I tried a fallback model, but please try again in a moment.'
         : `Error: ${message}`;
       setMessages(prev => [...prev, { role: 'model', content: friendlyMessage }]);
     } finally {
@@ -120,7 +133,23 @@ export const Chat: React.FC<ChatProps> = ({ apiKey, onOpenSettings }) => {
               <Wand2 size={14} />
               Ask about the current tab
             </div>
-            <div className="composer-hint">Enter to send, Shift+Enter for a new line</div>
+            <div className="composer-controls">
+              <label className="model-select-wrap">
+                <span>Model</span>
+                <select
+                  value={activeModel}
+                  onChange={(e) => saveSelectedModel(e.target.value)}
+                  aria-label="Select Gemini model"
+                >
+                  {GEMINI_MODEL_OPTIONS.map((model) => (
+                    <option key={model.id} value={model.id}>
+                      {model.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <div className="composer-hint">Enter to send, Shift+Enter for a new line</div>
+            </div>
           </div>
 
           <div className="composer-row">

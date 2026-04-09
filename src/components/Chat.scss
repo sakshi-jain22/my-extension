@@ -173,7 +173,7 @@
     .composer-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       gap: 0.75rem;
       padding: 0 0.15rem;
     }
@@ -189,10 +189,55 @@
       color: #bfdbfe;
     }
 
+    .composer-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.4rem;
+    }
+
     .composer-hint {
       font-size: 0.75rem;
       color: #94a3b8;
       text-align: right;
+    }
+
+    .model-select-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(96, 165, 250, 0.18);
+      background: rgba(15, 23, 42, 0.65);
+      color: #bfdbfe;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+
+      span {
+        white-space: nowrap;
+      }
+
+      select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        border: none;
+        outline: none;
+        background: transparent;
+        color: #e2e8f0;
+        font: inherit;
+        text-transform: none;
+        letter-spacing: normal;
+        cursor: pointer;
+        max-width: 170px;
+
+        option {
+          color: #0f172a;
+        }
+      }
     }
 
     .composer-row {
@@ -264,6 +309,22 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: 420px) {
+  .chat-container .input-area .composer-header {
+    flex-direction: column;
+  }
+
+  .chat-container .input-area .composer-controls {
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .chat-container .input-area .model-select-wrap {
+    width: 100%;
+    justify-content: space-between;
   }
 }
 
